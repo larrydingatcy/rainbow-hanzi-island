@@ -1,0 +1,12 @@
+{
+  "name": "彩虹汉字岛",
+  "short_name": "汉字岛",
+  "description": "给小朋友的汉字复习游戏",
+  "lang": "zh-Hans",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fff9ea",
+  "theme_color": "#fff9ea"
+}
