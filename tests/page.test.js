@@ -1,1 +1,37 @@
-m«ëˆ§½©buªàºg§¶×¬¶Ïéj­zËc±KæÚ±î¸Ø[é¢Šwâ•ê(º×â•æÛ­æ¤n·š‘éÜ¡×¢ëiºÛ©Š{h–)Ş²‡åzx-†{¦×^r‡^uç(uè§¦ëa…éiv+)•¬­†+&zËè¢›­Šznµø¥y×Ÿjém~ŠìµØ§¢‹­¦ëhºÚnµø¥y×Ÿjém~ŠìµÚ.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const testsDirectory = path.dirname(fileURLToPath(import.meta.url));
+const projectDirectory = path.dirname(testsDirectory);
+
+test('the static page exposes touch-friendly learning activities', async () => {
+  const html = await readFile(path.join(projectDirectory, 'index.html'), 'utf8');
+  for (const id of ['home-screen', 'game-screen', 'word-screen', 'draw-screen', 'result-screen', 'progress-screen']) {
+    assert.match(html, new RegExp(`id=["']${id}["']`), `missing #${id}`);
+  }
+  assert.match(html, /æ¯æ—¥æ¢é™©/);
+  assert.match(html, /è®¤ä¸€è®¤/);
+  assert.match(html, /å¬ä¸€å¬/);
+  assert.match(html, /ç”¨ä¸€ç”¨/);
+  assert.match(html, /å†™ä¸€å†™/);
+  assert.match(html, /<canvas[^>]+id=["']writing-canvas["']/);
+  assert.match(html, /æœ¬å‘¨é‡ç‚¹/);
+  assert.match(html, /åŠ¨ç‰©ä¼™ä¼´/);
+  assert.match(html, /ç§¯åˆ†/);
+  assert.match(html, /<script[^>]+type=["']module["'][^>]+src=["']\.\/src\/app\.js["']/);
+  assert.doesNotMatch(html, /Bluey/i);
+});
+
+test('the web app can be installed and cached on an iPad', async () => {
+  const [html, manifest, worker] = await Promise.all([
+    readFile(path.join(projectDirectory, 'index.html'), 'utf8'),
+    readFile(path.join(projectDirectory, 'manifest.webmanifest'), 'utf8'),
+    readFile(path.join(projectDirectory, 'sw.js'), 'utf8'),
+  ]);
+  assert.match(html, /manifest\.webmanifest/);
+  assert.equal(JSON.parse(manifest).display, 'standalone');
+  assert.match(worker, /index\.html/);
+});
