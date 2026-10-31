@@ -27,10 +27,11 @@ jobs:
         run: node --test
       - name: Prepare static site
         run: |
-          mkdir -p _site/src _site/assets/animals
+          mkdir -p _site/src _site/assets/animals _site/forest-hanzi-adventure
           cp index.html styles.css manifest.webmanifest sw.js _site/
           cp src/app.js src/learning.js _site/src/
           cp assets/animals/*.svg _site/assets/animals/
+          cp forest-hanzi-adventure/index.html forest-hanzi-adventure/styles.css forest-hanzi-adventure/app.js forest-hanzi-adventure/learning.js _site/forest-hanzi-adventure/
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5
