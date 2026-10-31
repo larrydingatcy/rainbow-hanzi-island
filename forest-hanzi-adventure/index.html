@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#eef6df">
+    <title>森林汉字探险队</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="forest-bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <header class="topbar">
+      <button class="logo" type="button" data-screen="welcome-screen" aria-label="回到首页"><span>森</span><strong>森林汉字探险队</strong></button>
+      <button id="sound-toggle" class="sound-toggle" type="button" aria-pressed="true" aria-label="关闭声音"><span>🔊</span><b>声音开</b></button>
+    </header>
+
+    <main>
+      <section id="welcome-screen" class="screen active" aria-labelledby="welcome-title">
+        <div class="welcome-card">
+          <div class="welcome-copy">
+            <p class="eyebrow">FOREST HANZI QUEST</p>
+            <h1 id="welcome-title">和动物伙伴<br><em>一起找汉字</em></h1>
+            <p class="intro">走过五个森林树屋，每个树屋完成三个小挑战。</p>
+            <button id="start-game" class="main-button" type="button"><span>出发探险</span><small>15 个小挑战 · 约 15 分钟</small></button>
+          </div>
+          <div class="forest-hero" aria-hidden="true">
+            <span class="sun">☀️</span><span class="hill hill-one"></span><span class="hill hill-two"></span>
+            <span class="tree tree-one">🌳</span><span class="tree tree-two">🌲</span><span class="hero-animal" id="hero-animal">🐰</span>
+            <span class="path"></span><span class="sign">汉字森林 →</span>
+          </div>
+        </div>
+
+        <section class="animal-picker" aria-labelledby="animal-title">
+          <div><p class="eyebrow">CHOOSE A FRIEND</p><h2 id="animal-title">选一位动物伙伴</h2></div>
+          <div id="animal-grid" class="animal-grid"></div>
+        </section>
+
+        <div class="how-to-play" aria-label="游戏玩法">
+          <article><span>👀</span><strong>认一认</strong><small>看图找字</small></article>
+          <article><span>🔊</span><strong>听一听</strong><small>听音找字</small></article>
+          <article><span>🗣️</span><strong>读一读</strong><small>自己读，再听读音</small></article>
+          <article><span>🧩</span><strong>组一组</strong><small>汉字找图卡</small></article>
+          <article><span>✏️</span><strong>写一写</strong><small>沿浅色字描写</small></article>
+        </div>
+      </section>
+
+      <section id="game-screen" class="screen" aria-labelledby="question-title">
+        <div class="game-header">
+          <button id="exit-game" class="round-button" type="button" aria-label="退出本轮">×</button>
+          <div id="trail" class="trail" aria-label="森林路线进度"></div>
+          <span id="step-count">1 / 5</span>
+        </div>
+
+        <div class="game-layout">
+          <aside class="companion-card">
+            <div id="companion-emoji">🐰</div><strong id="companion-name">小兔米米</strong><p id="companion-cheer">竖起耳朵，仔细听！</p>
+          </aside>
+          <section class="task-card">
+            <p id="mode-label" class="mode-label">认一认</p>
+            <h2 id="question-title">哪个字和图片是好朋友？</h2>
+            <div id="question-visual" class="question-visual"></div>
+            <div id="choice-grid" class="choice-grid"></div>
+
+            <div id="read-panel" class="read-panel" hidden>
+              <button id="read-listen" class="listen-button" type="button">🔊 听标准读音</button>
+              <button id="read-done" class="main-button compact" type="button">我读好了</button>
+            </div>
+
+            <div id="writing-panel" class="writing-panel" hidden>
+              <div class="canvas-shell"><canvas id="writing-canvas" aria-label="写字区域"></canvas><span>沿着浅色字写一写</span></div>
+              <div><button id="clear-writing" class="plain-button" type="button">擦掉重写</button><button id="writing-done" class="main-button compact" type="button">写好了</button></div>
+            </div>
+
+            <button id="replay-sound" class="listen-button" type="button" hidden>🔊 再听一次</button>
+            <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+          </section>
+        </div>
+      </section>
+
+      <section id="result-screen" class="screen" aria-labelledby="result-title">
+        <div class="result-card">
+          <div class="result-animal"><span id="result-animal">🐰</span><i>🎉</i></div>
+          <p class="eyebrow">QUEST COMPLETE</p><h2 id="result-title">森林探险完成！</h2>
+          <p>今天和这些汉字见了面：</p><div id="result-words" class="result-words"></div>
+
+          <section class="discovery" aria-labelledby="discovery-title">
+            <p class="eyebrow">BONUS DISCOVERY</p><h3 id="discovery-title">新字小发现</h3>
+            <p>从熟悉的字出发，再认识两个新朋友。</p>
+            <div id="discovery-grid" class="discovery-grid"></div>
+          </section>
+
+          <div class="result-actions"><button id="play-again" class="main-button" type="button">再走一次</button><button class="plain-button" type="button" data-screen="welcome-screen">回到森林入口</button></div>
+        </div>
+      </section>
+    </main>
+
+    <div id="phase-celebration" class="phase-celebration" hidden role="status" aria-live="polite">
+      <div class="confetti" aria-hidden="true"><i>●</i><i>◆</i><i>▲</i><i>●</i><i>★</i><i>◆</i><i>▲</i><i>★</i></div>
+      <div class="celebration-bubble"><span id="celebration-animal">🐰</span><em>🎉</em><h2 id="celebration-title">认一认完成！</h2><p>动物伙伴正在为你欢呼！</p></div>
+    </div>
+
+    <footer>没有排名，也没有分数。慢慢认识每一个字。</footer>
+    <script src="./learning.js?v=4"></script>
+    <script src="./app.js?v=4"></script>
+  </body>
+</html>
